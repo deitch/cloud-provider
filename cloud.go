@@ -175,6 +175,14 @@ type Instances interface {
 	InstanceType(ctx context.Context, name types.NodeName) (string, error)
 	// InstanceTypeByProviderID returns the type of the specified instance.
 	InstanceTypeByProviderID(ctx context.Context, providerID string) (string, error)
+	// InstanceTags returns a map of cloud-provider specific tags for the specified instance.
+	// May be called multiple times. The keys of the map always will be prefixed with the
+	// name of the cloud provider as "cloudprovider.kubernetes.io/<providername>/".
+	InstanceTags(ctx context.Context, name types.NodeName) (map[string]string, error)
+	// InstanceTagsByProviderID returns a map of cloud-provider specific tags for the specified instance.
+	// May be called multiple times. The keys of the map always will be prefixed with the
+	// name of the cloud provider as "cloudprovider.kubernetes.io/<providername>/".
+	InstanceTagsByProviderID(ctx context.Context, providerID string) (map[string]string, error)
 	// AddSSHKeyToAllInstances adds an SSH public key as a legal identity for all instances
 	// expected format for the key is standard ssh-keygen format: <protocol> <blob>
 	AddSSHKeyToAllInstances(ctx context.Context, user string, keyData []byte) error
